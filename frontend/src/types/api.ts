@@ -209,4 +209,6 @@ export interface UpdateUserPayload {
   lastName: string;
   username: string;
   departmentId?: number | null;
+  /** Omit to leave the current role untouched. */
+  role?: UserRole;
 }

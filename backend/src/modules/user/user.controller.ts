@@ -16,8 +16,15 @@ export const createUserController = async (req: Request, res: Response) => {
         .status(400)
         .json({ message: "Validation failed", errors: result.error.issues });
     }
-    const { firstName, lastName, username, email, password, departmentId } =
-      result.data;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      departmentId,
+      role,
+    } = result.data;
     const user = await createUserService(
       firstName,
       lastName,
@@ -25,6 +32,7 @@ export const createUserController = async (req: Request, res: Response) => {
       email,
       password,
       departmentId,
+      role,
     );
     return res
       .status(201)
@@ -84,13 +92,15 @@ export const updateUserController = async (req: Request, res: Response) => {
           errors: result.error.flatten().fieldErrors,
         });
     }
-    const { firstName, lastName, username, departmentId } = result.data;
+    const { firstName, lastName, username, departmentId, role } =
+      result.data;
     const user = await updateUserService(
       id,
       firstName,
       lastName,
       username,
       departmentId,
+      role,
     );
     return res
       .status(200)

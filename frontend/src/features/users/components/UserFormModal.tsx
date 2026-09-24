@@ -81,6 +81,7 @@ export const UserFormModal = ({ isOpen, onClose, onSaved, user }: Props) => {
           lastName: values.lastName,
           username: values.username,
           departmentId,
+          role: values.role,
         });
       } else {
         await userApi.create({
@@ -200,7 +201,7 @@ export const UserFormModal = ({ isOpen, onClose, onSaved, user }: Props) => {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label={t("users.role")} htmlFor="role">
-            <Select id="role" disabled={isEdit} {...register("role")}>
+            <Select id="role" {...register("role")}>
               {ROLES.map((role) => (
                 <option key={role} value={role}>
                   {t(`role.${role}`)}

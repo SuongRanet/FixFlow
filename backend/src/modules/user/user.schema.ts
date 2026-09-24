@@ -41,4 +41,5 @@ export const updateUserSchema = z.object({
 //     .email("Invalid email address")
 //     .max(100, "Email must be at most 100 characters"),
   departmentId: z.number().int().positive().nullable().optional(),
+  role: z.enum(["ADMIN", "IT_SUPPORT", "USER"]).optional(),
 });

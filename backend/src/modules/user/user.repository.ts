@@ -7,6 +7,7 @@ export const createRepository = async (
   email: string,
   passwordHash: string,
   department_id?: number | null,
+  role: "ADMIN" | "IT_SUPPORT" | "USER" = "USER",
 ) => {
   const result = await pool.query(
     `
@@ -15,10 +16,11 @@ export const createRepository = async (
       last_name,
       username,
       email,
-      password_hash
+      password_hash,
       department_id,
+      role
     )
-    VALUES ($1, $2, $3, $4, $5 ,$6)
+    VALUES ($1, $2, $3, $4, $5, $6, $7::user_role)
     RETURNING
       id,
       first_name,
@@ -30,7 +32,15 @@ export const createRepository = async (
       is_active,
       created_at
     `,
-    [firstName, lastName, username, email, passwordHash, department_id ?? null],
+    [
+      firstName,
+      lastName,
+      username,
+      email,
+      passwordHash,
+      department_id ?? null,
+      role,
+    ],
   );
 
   return result.rows[0];
@@ -107,7 +117,8 @@ export const updateRepository = async (
   firstName: string,
   lastName: string,
   username: string,
-  departmentId?: number | null,
+  departmentId: number | null | undefined,
+  role: "ADMIN" | "IT_SUPPORT" | "USER",
 ) => {
   const result = await pool.query(
     `
@@ -117,6 +128,7 @@ export const updateRepository = async (
       last_name = $2,
       username = $3,
       department_id = $4,
+      role = $6,
       updated_at = CURRENT_TIMESTAMP
     WHERE id = $5
     RETURNING
@@ -131,7 +143,7 @@ export const updateRepository = async (
       created_at,
       updated_at
     `,
-    [firstName, lastName, username, departmentId ?? null, id],
+    [firstName, lastName, username, departmentId ?? null, id, role],
   );
 
   return result.rows[0];

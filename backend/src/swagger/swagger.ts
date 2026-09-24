@@ -148,6 +148,10 @@ export const swaggerSpec = {
             description: "Omit to keep current value, send null to clear",
             example: 1,
           },
+          role: {
+            allOf: [{ $ref: "#/components/schemas/Role" }],
+            description: "Omit to keep the user's current role",
+          },
         },
       },
       Option: {

@@ -15,6 +15,7 @@ export const createUserService = async (
   email: string,
   password: string,
   departmentId?: number | null,
+  role: "ADMIN" | "IT_SUPPORT" | "USER" = "USER",
 ) => {
   const existingUser = await getUserByEmailRepository(email);
 
@@ -31,6 +32,7 @@ export const createUserService = async (
     email,
     passwordHash,
     departmentId,
+    role,
   );
 
   return user;
@@ -58,6 +60,7 @@ export const updateUserService = async (
   lastName: string,
   username: string,
   departmentId?: number | null,
+  role?: "ADMIN" | "IT_SUPPORT" | "USER",
 ) => {
   const existingUser = await getUserByIdRepository(id);
 
@@ -71,6 +74,9 @@ export const updateUserService = async (
     lastName,
     username,
     departmentId === undefined ? existingUser.department_id : departmentId,
+    // An omitted role must keep the current one — never fall back to a
+    // default, or editing a name would silently demote an administrator.
+    role === undefined ? existingUser.role : role,
   );
 
   return user;
