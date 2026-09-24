@@ -53,6 +53,8 @@ export const swaggerSpec = {
     { name: "Ticket Attachment" },
     { name: "Notification" },
     { name: "Dashboard" },
+    { name: "Department" },
+    { name: "Category" },
   ],
   components: {
     securitySchemes: {
@@ -146,6 +148,14 @@ export const swaggerSpec = {
             description: "Omit to keep current value, send null to clear",
             example: 1,
           },
+        },
+      },
+      Option: {
+        type: "object",
+        description: "Dropdown entry: name is the label, id is the value.",
+        properties: {
+          name: { type: "string", example: "Engineering" },
+          id: { type: "integer", example: 4 },
         },
       },
       CreateTicketInput: {
@@ -460,7 +470,9 @@ export const swaggerSpec = {
       },
       post: {
         tags: ["Ticket Attachment"],
-        summary: "Upload an attachment (max 10 MB)",
+        summary: "Upload an attachment to Cloudinary (max 10 MB)",
+        description:
+          "The file is streamed to Cloudinary under fixflow/tickets/<ticketId>; the stored file_path is the returned secure URL.",
         requestBody: {
           required: true,
           content: {
@@ -516,6 +528,70 @@ export const swaggerSpec = {
         tags: ["Notification"],
         summary: "Mark all notifications as read",
         responses: { 200: res("All marked as read"), ...unauthorized },
+      },
+    },
+
+    // ---------- Department & Category ----------
+    "/departments": {
+      get: {
+        tags: ["Department"],
+        summary: "List departments as { name, id } options",
+        responses: {
+          200: {
+            description: "Departments",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                    data: {
+                      type: "array",
+                      items: { $ref: "#/components/schemas/Option" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          ...unauthorized,
+        },
+      },
+    },
+    "/categories": {
+      get: {
+        tags: ["Category"],
+        summary: "List active categories as { name, id } options",
+        responses: {
+          200: {
+            description: "Categories",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean" },
+                    data: {
+                      type: "array",
+                      items: {
+                        allOf: [
+                          { $ref: "#/components/schemas/Option" },
+                          {
+                            type: "object",
+                            properties: {
+                              description: { type: "string", nullable: true },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          ...unauthorized,
+        },
       },
     },
 

@@ -336,3 +336,47 @@ export const getTicketsFilterRepository = async (filters: TicketFilters) => {
 
   return result.rows;
 };
+
+export const getMyTicketsRepository = async (userId: number) => {
+  const result = await pool.query(
+    `
+    SELECT
+      t.id,
+      t.ticket_code,
+      t.title,
+      t.description,
+      t.status,
+      t.priority,
+      t.created_at,
+      t.updated_at,
+
+      c.name AS category_name,
+      d.name AS department_name,
+
+      creator.username AS creator_username,
+
+      assigned.username AS assigned_to_username
+
+    FROM tickets t
+
+    LEFT JOIN categories c
+      ON t.category_id = c.id
+
+    LEFT JOIN departments d
+      ON t.department_id = d.id
+
+    LEFT JOIN users creator
+      ON t.created_by = creator.id
+
+    LEFT JOIN users assigned
+      ON t.assigned_to = assigned.id
+
+    WHERE t.created_by = $1
+
+    ORDER BY t.created_at DESC
+    `,
+    [userId],
+  );
+
+  return result.rows;
+};

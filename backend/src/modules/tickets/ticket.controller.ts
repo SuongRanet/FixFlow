@@ -3,6 +3,7 @@ import {
   assignTicketService,
   assignTicketToMeService,
   createTicketService,
+  getMyTicketsService,
   getTicketByIdService,
   getTicketService,
   getTicketsService,
@@ -204,8 +205,26 @@ export const getTicketsFillterController = async (
 ) => {
   try {
     const filters = ticketFilterSchema.parse(req.query);
-    
+
     const tickets = await getTicketsService(filters);
+
+    return res.status(200).json({
+      success: true,
+      data: tickets,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const getMyTicketsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const userId = req.user!.id;
+
+    const tickets = await getMyTicketsService(userId);
 
     return res.status(200).json({
       success: true,

@@ -1,3 +1,4 @@
+import { emitToUser } from "../../config/socket.js";
 import { CreateNotificationInput } from "../../types/type.js";
 import {
   createNotificationRepository,
@@ -7,10 +8,18 @@ import {
   markNotificationAsReadRepository,
 } from "./notification.repository.js";
 
+/**
+ * Every notification in the app is created here, so this is the one place
+ * that needs to push to the socket — new callers get live delivery free.
+ */
 export const createNotificationService = async (
   data: CreateNotificationInput,
 ) => {
-  return await createNotificationRepository(data);
+  const notification = await createNotificationRepository(data);
+
+  emitToUser(data.userId, "notification:new", notification);
+
+  return notification;
 };
 
 export const getNotificationsService = async (userId: number) => {

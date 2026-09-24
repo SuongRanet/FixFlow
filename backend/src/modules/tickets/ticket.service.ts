@@ -1,9 +1,11 @@
+import { emitTicketChanged } from "../../config/socket.js";
 import { createNotificationService } from "../notification/notification.service.js";
 import {
   assignTicketRepository,
   assignTicketToMeRepository,
   createTicketRepository,
   generateTicketCode,
+  getMyTicketsRepository,
   getTicketById,
   getTicketsFilterRepository,
   getTicketsRepository,
@@ -97,9 +99,16 @@ export const updateTicketStatusService = async (
     throw new Error("Ticket not found");
   }
 
+  // No notification row is written for a status change, so tell any open
+  // ticket page directly that it should refresh.
+  emitTicketChanged(ticket.id, { status: ticket.status });
+
   return ticket;
 };
 export const getTicketsService = async (filters: TicketFilters) => {
   console.log("FILTERS:", filters);
   return await getTicketsFilterRepository(filters);
+};
+export const getMyTicketsService = async (userId: number) => {
+  return await getMyTicketsRepository(userId);
 };

@@ -1,0 +1,341 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   FIXFLOW CONSOLE — BLUEPRINT THEME
+   ชุดสีและตัวอักษรนำมาจากเทมเพลต "FixFlow Console"
+   ลักษณะเด่น: มุมเหลี่ยม (ไม่มี border-radius), การ์ดพื้นโปร่งใสมีเส้นขอบบาง,
+   ตัวอักษร Barlow Condensed สำหรับหัวข้อ และสีเน้นน้ำเงินเทา
+   ========================================================================== */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* ==========================================================================
+     BRAND & CORE ACCENTS (สีแบรนด์และสีเน้นหลัก)
+     ========================================================================== */
+  /* สีหลักสำหรับ ปุ่มดำเนินการหลัก (Primary Actions), เมนูที่ใช้งานอยู่ และลิงก์ */
+  --color-accent: #5980a6;
+  --color-accent-2: #728fab;
+
+  /* ไล่เฉดสีเน้น ใช้กับป้ายสถานะ พื้นหลังจาง และข้อความบนป้าย */
+  --color-accent-100: #eef6ff;
+  --color-accent-200: #d6ebff;
+  --color-accent-300: #b5d9fd;
+  --color-accent-400: #94bce3;
+  --color-accent-500: #749dc4;
+  --color-accent-600: #597ea3;
+  --color-accent-700: #416180;
+  --color-accent-800: #2c455d;
+  --color-accent-900: #1d2d3d;
+
+  --color-accent-2-100: #eef6ff;
+  --color-accent-2-200: #d6ebff;
+  --color-accent-2-300: #bdd8f2;
+  --color-accent-2-400: #9ebbd8;
+  --color-accent-2-500: #7e9cb8;
+  --color-accent-2-600: #627d98;
+  --color-accent-2-700: #486077;
+  --color-accent-2-800: #314457;
+  --color-accent-2-900: #1f2d3a;
+
+  /* ==========================================================================
+     NEUTRALS (สีกลาง) — ใช้กับป้ายสถานะที่ปิดงานแล้ว และเส้นแบ่ง
+     ========================================================================== */
+  --color-neutral-100: #f5f5f8;
+  --color-neutral-200: #e7e7ea;
+  --color-neutral-300: #d4d4d7;
+  --color-neutral-400: #b7b7ba;
+  --color-neutral-500: #98989b;
+  --color-neutral-600: #7a7a7d;
+  --color-neutral-700: #5d5d60;
+  --color-neutral-800: #424244;
+  --color-neutral-900: #2b2b2d;
+
+  /* ==========================================================================
+     SURFACES & TEXT (พื้นหลัง และสีข้อความ)
+     ========================================================================== */
+  /* สีพื้นหลังหลักของแอปพลิเคชัน */
+  --color-bg: #f2f2f3;
+
+  /* สีพื้นหลังของช่องกรอกข้อมูล และแถบข้าง */
+  --color-surface: #e9e9ea;
+
+  /* สีข้อความหลักและหัวข้อ */
+  --color-text: #1d1f20;
+
+  /* เส้นขอบการ์ด ช่องกรอกข้อมูล และเส้นแบ่งตาราง */
+  --color-divider: color-mix(in srgb, #1d1f20 16%, transparent);
+
+  /* ==========================================================================
+     FEEDBACK (สีแจ้งผลลัพธ์) — ใช้เท่าที่จำเป็นเพื่อคงโทนสีของเทมเพลต
+     ========================================================================== */
+  --color-danger: #a65959;
+  --color-danger-strong: #8c4444;
+  --color-success: #5f8f72;
+  --color-warning: #a6864f;
+
+  /* ==========================================================================
+     TYPOGRAPHY (ตัวอักษร)
+     ========================================================================== */
+  --font-heading: "Barlow Condensed", "Noto Sans Khmer", "Noto Sans SC",
+    system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --font-body: "Barlow", "Noto Sans Khmer", "Noto Sans SC", system-ui,
+    sans-serif;
+
+  /* ==========================================================================
+     SPACING, RADIUS & SHADOW (ระยะห่าง มุม และเงา)
+     ========================================================================== */
+  --space-1: 3.4px;
+  --space-2: 6.8px;
+  --space-3: 10.2px;
+  --space-4: 13.6px;
+  --space-6: 20.4px;
+  --space-8: 27.2px;
+
+  /* เทมเพลตนี้ใช้มุมเหลี่ยมทั้งหมด */
+  --radius-sharp: 0px;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2b2b2d 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2b2b2d 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2b2b2d 22%, transparent);
+}
+
+/* ==========================================================================
+   DARK THEME (ธีมมืด) — สลับ bg กับ text ตามเทมเพลตต้นฉบับ
+   ========================================================================== */
+.dark {
+  --color-bg: #1d1f20;
+  --color-surface: color-mix(in srgb, #f2f2f3 5%, #1d1f20);
+  --color-text: #f2f2f3;
+  --color-divider: color-mix(in srgb, #f2f2f3 14%, transparent);
+
+  /* บนพื้นเข้มต้องใช้เฉดสว่างขึ้นเพื่อให้อ่านชัด */
+  --color-accent: #7d9bbb;
+  --color-accent-2: #9ebbd8;
+
+  --color-danger: #d69292;
+  --color-danger-strong: #c07a7a;
+  --color-success: #8fc2a3;
+  --color-warning: #d9b878;
+
+  --shadow-sm: 0 0 0 1px color-mix(in srgb, #f2f2f3 6%, transparent);
+  --shadow-md:
+    0 0 0 1px color-mix(in srgb, #f2f2f3 8%, transparent),
+    0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-lg:
+    0 0 0 1px color-mix(in srgb, #f2f2f3 10%, transparent),
+    0 18px 48px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   TAILWIND THEME MAPPING
+   @theme inline ทำให้ utility อ้างอิงตัวแปรตอน runtime
+   จึงสลับ light / dark ได้ทันทีโดยไม่ต้อง build ใหม่
+   ========================================================================== */
+@theme inline {
+  /* BRAND — bg-primary, text-primary, border-primary */
+  --color-primary: var(--color-accent);
+  --color-primary-hover: var(--color-accent-600);
+  --color-primary-active: var(--color-accent-700);
+  /* ข้อความบนพื้นสีเน้น ใช้สีพื้นหลังของหน้าเพื่อคอนทราสต์สูงสุด */
+  --color-primary-fg: var(--color-bg);
+  /* พื้นหลังจางของสีเน้น เช่น เมนูที่ถูกเลือก */
+  --color-primary-soft: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  --color-accent-soft: color-mix(in srgb, var(--color-accent-2) 16%, transparent);
+
+  /* SURFACES — bg-app, bg-surface, bg-subtle, hover:bg-hover */
+  --color-app: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-subtle: color-mix(in srgb, var(--color-text) 4%, transparent);
+  --color-hover: color-mix(in srgb, var(--color-text) 7%, transparent);
+  --color-pressed: color-mix(in srgb, var(--color-text) 14%, transparent);
+  /* พื้นหลังโน้ตภายใน (เห็นเฉพาะเจ้าหน้าที่ IT) */
+  --color-internal-note: color-mix(
+    in srgb,
+    var(--color-warning) 12%,
+    transparent
+  );
+
+  /* TEXT — text-main, text-muted, text-faint */
+  --color-main: var(--color-text);
+  --color-muted: color-mix(in srgb, var(--color-text) 55%, transparent);
+  --color-faint: color-mix(in srgb, var(--color-text) 40%, transparent);
+  --color-placeholder: color-mix(in srgb, var(--color-text) 40%, transparent);
+
+  /* BORDERS — border-border, border-border-strong */
+  --color-border: var(--color-divider);
+  --color-border-strong: color-mix(
+    in srgb,
+    var(--color-text) 45%,
+    transparent
+  );
+  /* เส้นแบ่งแถวในตาราง บางกว่าเส้นขอบการ์ด */
+  --color-rule: color-mix(in srgb, var(--color-text) 8%, transparent);
+
+  /* STATUS TAGS (ป้ายสถานะ) — โทนเดียวกับเทมเพลต คือ น้ำเงิน / เทา */
+  --color-tag-open: transparent;
+  --color-tag-open-fg: var(--color-accent);
+  --color-tag-active: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  --color-tag-active-fg: var(--color-text);
+  --color-tag-done: color-mix(in srgb, var(--color-text) 10%, transparent);
+  --color-tag-done-fg: var(--color-muted);
+
+  /* FEEDBACK — bg-danger, text-success, text-warning */
+  --color-danger: var(--color-danger);
+  --color-danger-hover: var(--color-danger-strong);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+
+  /* FONTS */
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+
+  /* RADIUS — เทมเพลตใช้มุมเหลี่ยม */
+  --radius-none: 0px;
+}
+
+/* ==========================================================================
+   BASE STYLES (สไตล์พื้นฐาน)
+   ========================================================================== */
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* หัวข้อทุกระดับใช้ฟอนต์บีบ (condensed) ตามเทมเพลต */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  /* ภาษาเขมรต้องการ line-height สูงกว่าเพื่อไม่ให้สระซ้อนกัน */
+  html[lang="km"] body {
+    line-height: 1.8;
+  }
+
+  html[lang="km"] h1,
+  html[lang="km"] h2,
+  html[lang="km"] h3,
+  html[lang="km"] h4 {
+    line-height: 1.5;
+    letter-spacing: normal;
+  }
+
+  ::placeholder {
+    color: color-mix(in srgb, var(--color-text) 40%, transparent);
+  }
+
+  /* เส้นขอบโฟกัสสำหรับการใช้งานผ่านคีย์บอร์ด (accessibility) */
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------------
+     BLUEPRINT CORNERS (เครื่องหมายกากบาทที่มุมแผง)
+     ใช้กับ <Panel> เพื่อให้ได้ลุคแบบแบบแปลนวิศวกรรมตามเทมเพลต
+     ------------------------------------------------------------------------ */
+  .blueprint {
+    position: relative;
+  }
+
+  .blueprint > .corner {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    color: color-mix(in srgb, var(--color-text) 55%, transparent);
+    pointer-events: none;
+  }
+
+  .blueprint > .corner::before,
+  .blueprint > .corner::after {
+    content: "";
+    position: absolute;
+    background: currentcolor;
+  }
+
+  .blueprint > .corner::before {
+    left: 5px;
+    top: 0;
+    width: 1px;
+    height: 100%;
+  }
+
+  .blueprint > .corner::after {
+    top: 5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+  }
+
+  .blueprint > .corner.tl {
+    top: -6px;
+    left: -6px;
+  }
+
+  .blueprint > .corner.tr {
+    top: -6px;
+    right: -6px;
+  }
+
+  .blueprint > .corner.bl {
+    bottom: -6px;
+    left: -6px;
+  }
+
+  .blueprint > .corner.br {
+    bottom: -6px;
+    right: -6px;
+  }
+
+  /* ป้ายกำกับตัวพิมพ์ใหญ่เหนือหัวข้อ เช่น "ADMIN" หรือ "TOTAL TICKETS" */
+  .kicker {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  /* บรรทัดบอก endpoint ใต้หัวเรื่อง เช่น "GET /api/v1/dashboard" */
+  .endpoint {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  }
+}
+
+/* แถบเลื่อนให้เข้ากับธีม */
+@layer utilities {
+  .scrollbar-slim {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-text) 25%, transparent)
+      transparent;
+  }
+
+  .scrollbar-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-slim::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--color-text) 25%, transparent);
+  }
+}

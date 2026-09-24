@@ -3,6 +3,7 @@ import {
   assignTicketController,
   assignTicketToMeController,
   createTicketController,
+  getMyTicketsController,
   getTicketByIdController,
   getTicketsController,
   getTicketsFillterController,
@@ -20,6 +21,7 @@ ticketRouter.get(
   authMiddleware,
   getTicketsFillterController,
 );
+ticketRouter.get(`${PREFIX}/my`, authMiddleware, getMyTicketsController);
 ticketRouter.get(`${PREFIX}/:id`, authMiddleware, getTicketByIdController);
 ticketRouter.patch(
   `${PREFIX}/:id/assign`,

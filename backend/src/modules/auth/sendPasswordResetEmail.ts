@@ -7,7 +7,7 @@ export const sendPasswordResetEmail = async (
   email: string,
   resetToken: string,
 ) => {
-  const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
+  const resetUrl = `http://localhost:5173/reset-password?token=${resetToken}`;
   await transporter.sendMail({
     from: `"FixFlow" <${process.env.SMTP_USER}>`,
     to: email,
