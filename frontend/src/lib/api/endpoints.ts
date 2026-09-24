@@ -177,8 +177,7 @@ export const attachmentApi = {
 
 export const userApi = {
   list: async () => {
-    const { data } =
-      await serverRest.get<ApiEnvelope<User[]>>("/auth/register");
+    const { data } = await serverRest.get<ApiEnvelope<User[]>>("/user");
     return data.data;
   },
 
@@ -188,7 +187,10 @@ export const userApi = {
   },
 
   create: async (payload: CreateUserPayload) => {
-    const { data } = await serverRest.post<ApiEnvelope<User>>("/user", payload);
+    const { data } = await serverRest.post<ApiEnvelope<User>>(
+      "/auth/register",
+      payload,
+    );
     return data.data;
   },
 
