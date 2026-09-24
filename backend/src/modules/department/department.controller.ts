@@ -1,10 +1,7 @@
 import type { Request, Response } from "express";
 import { getDepartmentsService } from "./department.service.js";
 
-export const getDepartmentsController = async (
-  _req: Request,
-  res: Response,
-) => {
+export const getDepartmentsController = async (req: Request, res: Response) => {
   try {
     const departments = await getDepartmentsService();
 

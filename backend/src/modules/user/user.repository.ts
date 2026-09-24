@@ -172,3 +172,17 @@ export const deleteRepository = async (id: number) => {
 
   return result.rows[0];
 };
+
+/** Admin ids, used to fan a stored notification out to every administrator. */
+export const getAdminIdsRepository = async () => {
+  const result = await pool.query(
+    `
+    SELECT id
+    FROM users
+    WHERE role = 'ADMIN'
+      AND is_active = true
+    `,
+  );
+
+  return result.rows.map((row) => Number(row.id));
+};

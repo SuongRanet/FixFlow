@@ -18,14 +18,12 @@ import z from "zod";
 export const createTicketController = async (req: Request, res: Response) => {
   try {
     const { title, description, priority, categoryId, departmentId } = req.body;
-
     if (!req.user) {
       return res.status(401).json({
         message: "Unauthorized",
       });
     }
     const createdBy = req.user.id;
-
     const ticket = await createTicketService(
       title,
       description,

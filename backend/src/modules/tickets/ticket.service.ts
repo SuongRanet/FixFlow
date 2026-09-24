@@ -1,4 +1,6 @@
 import { emitTicketChanged } from "../../config/socket.js";
+import { broadcastTicketCreated } from "../../realtime/broadcast.js";
+import { getAdminIdsRepository } from "../user/user.repository.js";
 import { createNotificationService } from "../notification/notification.service.js";
 import {
   assignTicketRepository,
@@ -23,7 +25,7 @@ export const createTicketService = async (
 ) => {
   const ticketCode = generateTicketCode();
 
-  return await createTicketRepository(
+  const ticket = await createTicketRepository(
     await ticketCode,
     title,
     description,
@@ -32,6 +34,37 @@ export const createTicketService = async (
     departmentId,
     createdBy,
   );
+
+  // Live feed for the staff queue plus refreshed admin counters.
+  broadcastTicketCreated({
+    id: ticket.id,
+    ticketCode: ticket.ticket_code,
+    title: ticket.title,
+    priority: ticket.priority,
+    status: ticket.status,
+    categoryId: ticket.category_id ?? null,
+    departmentId: ticket.department_id ?? null,
+    createdBy: { id: createdBy, username: ticket.creator_username ?? null },
+    createdAt: ticket.created_at,
+  });
+
+  // Ticket creation is the only event that also leaves a stored
+  // notification, so an admin who was offline still sees it.
+  const adminIds = await getAdminIdsRepository();
+  await Promise.all(
+    adminIds
+      .filter((adminId) => adminId !== createdBy)
+      .map((adminId) =>
+        createNotificationService({
+          userId: adminId,
+          ticketId: ticket.id,
+          title: "New ticket",
+          message: `${ticket.ticket_code} — ${ticket.title}`,
+        }),
+      ),
+  );
+
+  return ticket;
 };
 export const getTicketService = async (id: number, role: string) => {
   const ticket = await getTicketsRepository(id, role);

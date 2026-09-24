@@ -5,6 +5,7 @@ import {
   registerRepository,
 } from "./auth.repository.js";
 import jwt from "jsonwebtoken";
+import { broadcastUserRegistered } from "../../realtime/broadcast.js";
 
 export const registerService = async (
   firstName: string,
@@ -28,6 +29,15 @@ export const registerService = async (
     email,
     hashedPassword,
   );
+
+  broadcastUserRegistered({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    departmentId: user.department_id ?? null,
+    createdAt: user.created_at,
+  });
 
   return user;
 };

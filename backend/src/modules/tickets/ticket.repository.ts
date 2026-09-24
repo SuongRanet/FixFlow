@@ -380,3 +380,25 @@ export const getMyTicketsRepository = async (userId: number) => {
 
   return result.rows;
 };
+
+/**
+ * The two people entitled to a ticket's public feed. Used by the socket
+ * layer to authorise a subscription, so it must stay a direct read of the
+ * ticket row rather than anything the client supplies.
+ */
+export const getTicketParticipantsRepository = async (ticketId: number) => {
+  const result = await pool.query(
+    `
+    SELECT
+      created_by,
+      assigned_to
+    FROM tickets
+    WHERE id = $1
+    `,
+    [ticketId],
+  );
+
+  return result.rows[0] as
+    | { created_by: number; assigned_to: number | null }
+    | undefined;
+};
