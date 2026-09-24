@@ -177,7 +177,8 @@ export const attachmentApi = {
 
 export const userApi = {
   list: async () => {
-    const { data } = await serverRest.get<ApiEnvelope<User[]>>("/user");
+    const { data } =
+      await serverRest.get<ApiEnvelope<User[]>>("/auth/register");
     return data.data;
   },
 
